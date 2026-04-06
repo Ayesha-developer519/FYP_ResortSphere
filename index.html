@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ResortSphere</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+<!-- Sidebar Overlay -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+<!-- Sidebar -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-brand">Resort<span>Sphere</span></div>
+    <button class="sidebar-close" onclick="closeSidebar()">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+
+  <div class="sidebar-nav">
+    <div class="sidebar-label">Quick Links</div>
+
+    <a href="#" class="sidebar-link">
+      <div class="sidebar-icon"><i class="fas fa-calendar-check"></i></div>
+      Booking Resort
+    </a>
+
+    <a href="#" class="sidebar-link">
+      <div class="sidebar-icon"><i class="fas fa-headset"></i></div>
+      Contact Admin
+    </a>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-label">Session</div>
+
+    <a href="#" class="sidebar-logout">
+      <div class="sidebar-icon"><i class="fas fa-sign-out-alt"></i></div>
+      Log Out
+    </a>
+  </div>
+
+  <div class="sidebar-footer">© 2025 ResortSphere · All rights reserved</div>
+</aside>
+
+<!-- Navbar -->
+<nav class="navbar-custom">
+  <div class="container-fluid d-flex align-items-center justify-content-between">
+
+    <a href="#" class="navbar-brand-custom">
+      <div class="brand-logo"><i class="fas fa-hotel"></i></div>
+      <span class="brand-name">Resort<span>Sphere</span></span>
+    </a>
+
+    <div class="nav-right">
+      <button class="nav-globe" title="Language"><i class="fas fa-globe"></i></button>
+
+      <div class="nav-divider"></div>
+
+      <a href="#" class="btn-login">
+        <i class="fas fa-sign-in-alt"></i>
+        <span>Login</span>
+      </a>
+
+      <a href="#" class="btn-signup">
+        <i class="fas fa-user-plus"></i>
+        <span>Sign Up</span>
+      </a>
+
+      <div class="nav-divider"></div>
+
+      <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleSidebar()" title="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-tag">✦ Discover &amp; Book</div>
+    <h1>Entire place,<br/>just for you</h1>
+    <p>Explore the world's finest resorts — curated for every traveler</p>
+
+    <div class="search-bar">
+      <div class="search-field">
+        <i class="fas fa-map-marker-alt"></i>
+        <div class="search-field-inner">
+          <label>Where To?</label>
+          <input type="text" placeholder="Search destination"/>
+        </div>
+      </div>
+      <div class="search-field">
+        <i class="fas fa-calendar-alt"></i>
+        <div class="search-field-inner">
+          <label>When</label>
+          <span>Add dates</span>
+        </div>
+      </div>
+      <div class="search-field">
+        <i class="fas fa-users"></i>
+        <div class="search-field-inner">
+          <label>Who</label>
+          <span>Add guests</span>
+        </div>
+      </div>
+      <button class="search-btn"><i class="fas fa-search"></i></button>
+    </div>
+  </div>
+</section>
+
+<!-- Popular Homes -->
+<section class="section-wrap fade-in">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <div class="section-title">Popular homes in Islamabad</div>
+      <a href="#" class="section-link">See all <i class="fas fa-arrow-right fa-xs"></i></a>
+    </div>
+    <div class="row g-3">
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="resort-card card">
+         <a href="page2.html"><img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400&q=80" alt="Resort"/></a> 
+          <button class="heart-btn"><i class="fas fa-heart"></i></button>
+          <div class="card-body">
+            <div class="card-title">Apartment in Islamabad</div>
+            <div class="card-text">2 nights · Private room</div>
+            <div class="price-tag">$37 for 2 nights</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="resort-card card">
+          <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=400&q=80" alt="Resort"/>
+          <button class="heart-btn"><i class="fas fa-heart"></i></button>
+          <div class="card-body">
+            <div class="card-title">Condo in Islamabad</div>
+            <div class="card-text">2 nights · Entire unit</div>
+            <div class="price-tag">$50 for 2 nights</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="resort-card card">
+          <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=400&q=80" alt="Resort"/>
+          <button class="heart-btn"><i class="fas fa-heart"></i></button>
+          <div class="card-body">
+            <div class="card-title">Apartment in Islamabad</div>
+            <div class="card-text">3 nights · Private room</div>
+            <div class="price-tag">$48 for 3 nights</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="resort-card card">
+          <img src="https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=400&q=80" alt="Resort"/>
+          <button class="heart-btn liked"><i class="fas fa-heart"></i></button>
+          <div class="badge-star"><i class="fas fa-star"></i> 1 STAR</div>
+          <div class="card-body">
+            <div class="card-title">Room in Islamabad</div>
+            <div class="card-text">2 nights · Hotel room</div>
+            <div class="price-tag">$86 for 2 nights</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Hotels -->
+<section class="section-wrap fade-in" style="background:#f0ede8;">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <div>
+        <div class="section-title">Featured hotels in London</div>
+        <div style="font-size:0.78rem;color:var(--muted);">A collection of independent and hand picked hotels</div>
+      </div>
+      <a href="#" class="section-link">See all <i class="fas fa-arrow-right fa-xs"></i></a>
+    </div>
+    <div class="row g-3">
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="resort-card featured-card card">
+          <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=400&q=80" alt="Hotel"/>
+          <button class="heart-btn"><i class="fas fa-heart"></i></button>
+          <div class="card-body">
+            <div class="card-title">Rockwell East</div>
+            <div class="card-text">London · Boutique</div>
+            <div class="price-tag">From $411 for 2 nights</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="resort-card featured-card card">
+          <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=400&q=80" alt="Hotel"/>
+          <button class="heart-btn liked"><i class="fas fa-heart"></i></button>
+          <div class="card-body">
+            <div class="card-title">Hotel Saint</div>
+            <div class="card-text">London · Luxury</div>
+            <div class="price-tag">From $434 for 2 nights</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="resort-card featured-card card">
+          <img src="https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=400&q=80" alt="Hotel"/>
+          <button class="heart-btn"><i class="fas fa-heart"></i></button>
+          <div class="card-body">
+            <div class="card-title">Orange Buckingham</div>
+            <div class="card-text">London · Heritage</div>
+            <div class="price-tag">From $454 for 2 nights</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="resort-card featured-card card">
+          <img src="https://images.unsplash.com/photo-1445019980597-93fa8acb246c?w=400&q=80" alt="Hotel"/>
+          <button class="heart-btn"><i class="fas fa-heart"></i></button>
+          <div class="card-body">
+            <div class="card-title">Rockwell East</div>
+            <div class="card-text">London · Boutique</div>
+            <div class="price-tag">From $411 for 1 night</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Available Next Month -->
+<section class="section-wrap fade-in">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <div class="section-title">Available next month in Dubai</div>
+      <a href="#" class="section-link">See all <i class="fas fa-arrow-right fa-xs"></i></a>
+    </div>
+    <div class="row g-3">
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="resort-card card">
+          <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=400&q=80" alt="Dubai"/>
+          <button class="heart-btn liked"><i class="fas fa-heart"></i></button>
+          <div class="card-body">
+            <div class="card-title">San Antonio</div>
+            <div class="card-text">Condo rentals</div>
+            <div class="price-tag">Available Apr 12–18</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="resort-card card">
+          <img src="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=400&q=80" alt="Brooklyn"/>
+          <button class="heart-btn"><i class="fas fa-heart"></i></button>
+          <div class="card-body">
+            <div class="card-title">Brooklyn</div>
+            <div class="card-text">House rentals</div>
+            <div class="price-tag">Available Apr 5–10</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="resort-card card">
+          <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=400&q=80" alt="San Antonio"/>
+          <button class="heart-btn"><i class="fas fa-heart"></i></button>
+          <div class="card-body">
+            <div class="card-title">San Antonio</div>
+            <div class="card-text">Condo rentals</div>
+            <div class="price-tag">Available Apr 20–25</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="resort-card card">
+          <img src="ajs1-bed-5170531_1920.jpg" alt="San Antonio"/>
+          <button class="heart-btn"><i class="fas fa-heart"></i></button>
+          <div class="card-body">
+            <div class="card-title">San Antonio</div>
+            <div class="card-text">Condo rentals</div>
+            <div class="price-tag">Available Apr 8–14</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Destinations -->
+<section class="destinations-footer fade-in">
+  <div class="container">
+    <div class="row g-3">
+      <div class="col-6 col-md-3 dest-col">
+        <div class="dest-title">San Antonio</div>
+        <a href="#">Condo rentals</a>
+        <a href="#">House rentals</a>
+        <a href="#">Apartment rentals</a>
+      </div>
+      <div class="col-6 col-md-3 dest-col">
+        <div class="dest-title">Brooklyn</div>
+        <a href="#">House rentals</a>
+        <a href="#">Condo rentals</a>
+        <a href="#">Studio rentals</a>
+      </div>
+      <div class="col-6 col-md-3 dest-col">
+        <div class="dest-title">San Antonio</div>
+        <a href="#">Condo rentals</a>
+        <a href="#">House rentals</a>
+        <a href="#">Luxury stays</a>
+      </div>
+      <div class="col-6 col-md-3 dest-col">
+        <div class="dest-title">San Antonio</div>
+        <a href="#">Condo rentals</a>
+        <a href="#">Apartment rentals</a>
+        <a href="#">Beach stays</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="main-footer">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="footer-brand">Resort<span>Sphere</span></div>
+        <p style="font-size:0.81rem;line-height:1.75;">Your trusted platform for discovering and booking the finest resorts worldwide. Manage stays. Elevate experiences.</p>
+        <div class="d-flex gap-3 mt-3">
+          <a href="#" class="footer-link"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="footer-link"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="footer-link"><i class="fab fa-twitter"></i></a>
+        </div>
+      </div>
+      <div class="col-6 col-md-2">
+        <div class="footer-heading">Support</div>
+        <a href="#" class="footer-link">Help Center</a>
+        <a href="#" class="footer-link">Safety Info</a>
+        <a href="#" class="footer-link">Cancellation</a>
+        <a href="#" class="footer-link">Contact Us</a>
+      </div>
+      <div class="col-6 col-md-2">
+        <div class="footer-heading">Company</div>
+        <a href="#" class="footer-link">About Us</a>
+        <a href="#" class="footer-link">Careers</a>
+        <a href="#" class="footer-link">Press</a>
+        <a href="#" class="footer-link">Blog</a>
+      </div>
+      <div class="col-6 col-md-2">
+        <div class="footer-heading">Hosting</div>
+        <a href="#" class="footer-link">List your Resort</a>
+        <a href="#" class="footer-link">Resort Manager</a>
+        <a href="#" class="footer-link">Resources</a>
+        <a href="#" class="footer-link">Community</a>
+      </div>
+      <div class="col-6 col-md-2">
+        <div class="footer-heading">Legal</div>
+        <a href="#" class="footer-link">Privacy Policy</a>
+        <a href="#" class="footer-link">Terms of Service</a>
+        <a href="#" class="footer-link">Cookie Policy</a>
+      </div>
+    </div>
+    <hr class="footer-divider"/>
+    <div class="d-flex flex-wrap justify-content-between align-items-center" style="font-size:0.77rem;">
+      <span>© 2025 ResortSphere · Government Graduate College for Women, Sheikhupura</span>
+      <span>Made with ❤️ by Insha, Ayesha, Saira &amp; Shabana</span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // Sidebar
+  function toggleSidebar() {
+    const isOpen = document.getElementById('sidebar').classList.contains('open');
+    isOpen ? closeSidebar() : openSidebar();
+  }
+
+  function openSidebar() {
+    document.getElementById('sidebar').classList.add('open');
+    document.getElementById('sidebarOverlay').classList.add('open');
+    document.getElementById('hamburgerBtn').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeSidebar() {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebarOverlay').classList.remove('open');
+    document.getElementById('hamburgerBtn').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSidebar(); });
+
+  // Heart toggle
+  document.querySelectorAll('.heart-btn').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      btn.classList.toggle('liked');
+      const icon = btn.querySelector('i');
+      icon.style.transform = 'scale(1.4)';
+      setTimeout(() => icon.style.transform = 'scale(1)', 200);
+    });
+  });
+
+  // Scroll fade in
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(en => { if (en.isIntersecting) en.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-in').forEach(el => io.observe(el));
+
+  // Date picker
+  document.querySelectorAll('.search-field').forEach(f => {
+    f.addEventListener('click', function() {
+      const sp = this.querySelector('span');
+      if (sp && sp.textContent.trim() === 'Add dates') {
+        const inp = document.createElement('input');
+        inp.type = 'date';
+        inp.style.cssText = 'border:none;outline:none;background:none;font-size:0.83rem;font-weight:500;color:#333;width:100%;';
+        sp.replaceWith(inp);
+        inp.focus();
+      }
+    });
+  });
+</script>
+</body>
+</html>
