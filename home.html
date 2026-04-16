@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ResortSphere</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+  <style>
+    :root {
+      --crimson: #c0392b;
+      --crimson-dark: #96281b;
+      --navy: #0d1b2a;
+      --gold: #c9a84c;
+      --light: #f7f4ef;
+      --muted: #8a8a8a;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body { font-family: 'DM Sans', sans-serif; background: var(--light); color: #1a1a1a; }
+
+    /* ============================
+       NAVBAR
+    ============================ */
+    .navbar-custom {
+      background: var(--navy);
+      padding: 0.65rem 1.5rem;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+    }
+
+    .navbar-brand-custom {
+      display: flex; align-items: center; gap: 10px; text-decoration: none;
+    }
+
+    .brand-logo {
+      width: 36px; height: 36px; background: var(--crimson); border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px; color: white;
+    }
+
+    .brand-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem; font-weight: 700; color: white;
+    }
+    .brand-name span { color: var(--crimson); }
+
+    .nav-right { display: flex; align-items: center; gap: 10px; }
+
+    .nav-globe {
+      background: none; border: none; color: rgba(255,255,255,0.72);
+      font-size: 1.05rem; cursor: pointer; padding: 7px 9px; border-radius: 7px;
+      transition: all 0.2s;
+    }
+    .nav-globe:hover { background: rgba(255,255,255,0.1); color: white; }
+
+    .nav-divider { width: 1px; height: 20px; background: rgba(255,255,255,0.18); flex-shrink: 0; }
+
+    /* --- Login Button --- */
+    .btn-login {
+      background: transparent;
+      border: 1.5px solid rgba(255,255,255,0.32);
+      color: rgba(255,255,255,0.88);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.84rem; font-weight: 500;
+      padding: 7px 16px; border-radius: 8px;
+      text-decoration: none;
+      display: inline-flex; align-items: center; gap: 6px;
+      transition: all 0.25s ease;
+      white-space: nowrap;
+      position: relative; overflow: hidden;
+    }
+
+    .btn-login::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: rgba(255,255,255,0);
+      transition: background 0.25s;
+    }
+
+    .btn-login:hover {
+      border-color: rgba(255,255,255,0.72);
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+      text-decoration: none;
+    }
+    .btn-login:hover::before { background: rgba(255,255,255,0.09); }
+    .btn-login:active { transform: translateY(0); }
+
+    /* --- Sign Up Button --- */
+    .btn-signup {
+      background: var(--crimson);
+      border: 1.5px solid var(--crimson);
+      color: white;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.84rem; font-weight: 600;
+      padding: 7px 16px; border-radius: 8px;
+      text-decoration: none;
+      display: inline-flex; align-items: center; gap: 6px;
+      transition: all 0.25s ease;
+      position: relative; overflow: hidden;
+      white-space: nowrap;
+    }
+
+    /* ripple on hover */
+    .btn-signup::after {
+      content: '';
+      position: absolute; top: 50%; left: 50%;
+      width: 0; height: 0;
+      background: rgba(255,255,255,0.22);
+      border-radius: 50%;
+      transform: translate(-50%,-50%);
+      transition: width 0.45s ease, height 0.45s ease, opacity 0.45s;
+      opacity: 0;
+    }
+
+    .btn-signup:hover {
+      background: var(--crimson-dark);
+      border-color: var(--crimson-dark);
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 18px rgba(192,57,43,0.5);
+      text-decoration: none;
+    }
+
+    .btn-signup:hover::after { width: 240px; height: 240px; opacity: 1; }
+    .btn-signup:active { transform: translateY(0); }
+
+    /* --- Hamburger --- */
+    .hamburger-btn {
+      background: rgba(255,255,255,0.07);
+      border: 1.5px solid rgba(255,255,255,0.18);
+      cursor: pointer;
+      display: flex; flex-direction: column; gap: 5px;
+      padding: 7px 9px; border-radius: 8px;
+      transition: all 0.22s ease; flex-shrink: 0;
+    }
+
+    .hamburger-btn:hover {
+      background: rgba(255,255,255,0.13);
+      border-color: rgba(255,255,255,0.4);
+    }
+
+    .hamburger-btn span {
+      display: block; width: 19px; height: 2px;
+      background: white; border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .hamburger-btn.active { background: rgba(192,57,43,0.18); border-color: var(--crimson); }
+    .hamburger-btn.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger-btn.active span:nth-child(2) { opacity: 0; }
+    .hamburger-btn.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ============================
+       SIDEBAR OVERLAY
+    ============================ */
+    .sidebar-overlay {
+      position: fixed; inset: 0;
+      background: rgba(13,27,42,0.52);
+      backdrop-filter: blur(3px);
+      z-index: 1500; opacity: 0; pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .sidebar-overlay.open { opacity: 1; pointer-events: all; }
+
+    /* ============================
+       SIDEBAR
+    ============================ */
+    .sidebar {
+      position: fixed; top: 0; right: 0;
+      width: 268px; height: 100vh;
+      background: white; z-index: 1600;
+      transform: translateX(110%);
+      transition: transform 0.36s cubic-bezier(0.4,0,0.2,1);
+      display: flex; flex-direction: column;
+      box-shadow: -6px 0 40px rgba(0,0,0,0.16);
+    }
+    .sidebar.open { transform: translateX(0); }
+
+    .sidebar-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 15px 20px;
+      background: var(--navy); flex-shrink: 0;
+    }
+
+    .sidebar-brand { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: white; font-weight: 700; }
+    .sidebar-brand span { color: var(--crimson); }
+
+    .sidebar-close {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: white; width: 30px; height: 30px;
+      border-radius: 7px; cursor: pointer;
+      font-size: 0.9rem;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s;
+    }
+    .sidebar-close:hover { background: rgba(255,255,255,0.22); border-color: rgba(255,255,255,0.45); }
+
+    .sidebar-nav { flex: 1; overflow-y: auto; padding-bottom: 16px; }
+
+    .sidebar-label {
+      font-size: 0.66rem; font-weight: 700;
+      letter-spacing: 1.7px; text-transform: uppercase;
+      color: #b5b5b5; padding: 18px 20px 8px;
+    }
+
+    /* Sidebar links with left-border + icon hover */
+    .sidebar-link {
+      display: flex; align-items: center; gap: 13px;
+      padding: 12px 20px;
+      text-decoration: none; color: #222;
+      font-size: 0.88rem; font-weight: 500;
+      border-left: 3px solid transparent;
+      transition: all 0.22s ease;
+    }
+
+    .sidebar-link:hover {
+      color: var(--crimson);
+      border-left-color: var(--crimson);
+      background: linear-gradient(to right, #fdf2f1 0%, transparent 80%);
+      text-decoration: none;
+    }
+
+    .sidebar-icon {
+      width: 34px; height: 34px; border-radius: 9px;
+      background: #f2f2f2; color: var(--crimson);
+      font-size: 0.82rem;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.22s ease;
+    }
+
+    .sidebar-link:hover .sidebar-icon {
+      background: var(--crimson); color: white;
+      transform: scale(1.1) rotate(-4deg);
+    }
+
+    .sidebar-divider { height: 1px; background: #f0f0f0; margin: 6px 20px; }
+
+    /* Logout */
+    .sidebar-logout {
+      display: flex; align-items: center; gap: 13px;
+      padding: 12px 20px;
+      text-decoration: none; color: var(--crimson);
+      font-size: 0.88rem; font-weight: 600;
+      border-left: 3px solid transparent;
+      transition: all 0.22s ease;
+    }
+
+    .sidebar-logout:hover {
+      background: linear-gradient(to right, #fff0ee 0%, transparent 80%);
+      border-left-color: var(--crimson);
+      color: var(--crimson-dark);
+      text-decoration: none;
+    }
+
+    .sidebar-logout .sidebar-icon { background: #ffeeec; color: var(--crimson); }
+
+    .sidebar-logout:hover .sidebar-icon {
+      background: var(--crimson); color: white;
+      transform: scale(1.1) rotate(-4deg);
+    }
+
+    .sidebar-footer {
+      padding: 12px 20px; border-top: 1px solid #f0f0f0;
+      font-size: 0.71rem; color: #c0c0c0; text-align: center; flex-shrink: 0;
+    }
+
+    /* ============================
+       HERO
+    ============================ */
+    .hero {
+      position: relative; height: 430px;
+      background: var(--navy);
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url('https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1600&q=80') center/cover;
+      opacity: 0.34;
+    }
+
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(13,27,42,0.5), rgba(13,27,42,0.76));
+    }
+
+    .hero-content {
+      position: relative; z-index: 2;
+      text-align: center; color: white;
+      padding: 0 20px; width: 100%;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      background: var(--crimson); color: white;
+      font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 2px; text-transform: uppercase;
+      padding: 5px 14px; border-radius: 20px; margin-bottom: 14px;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 700; line-height: 1.2; margin-bottom: 8px;
+    }
+
+    .hero p { font-size: 0.97rem; color: rgba(255,255,255,0.78); margin-bottom: 28px; }
+
+    /* Search bar */
+    .search-bar {
+      display: flex; background: white;
+      border-radius: 60px; overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.28);
+      max-width: 740px; margin: 0 auto;
+    }
+
+    .search-field {
+      flex: 1; display: flex; align-items: center; gap: 8px;
+      padding: 13px 18px; border-right: 1px solid #eee;
+      cursor: pointer; transition: background 0.15s;
+    }
+
+    .search-field:hover { background: #fafafa; }
+    .search-field i { color: var(--crimson); font-size: 0.88rem; flex-shrink: 0; }
+
+    .search-field-inner label {
+      display: block; font-size: 0.63rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 1px; color: #999; cursor: pointer;
+    }
+
+    .search-field-inner input, .search-field-inner span {
+      display: block; font-size: 0.83rem; font-weight: 500; color: #333;
+      border: none; outline: none; background: none; width: 100%; cursor: pointer;
+    }
+
+    .search-btn {
+      background: var(--crimson); border: none; color: white;
+      padding: 0 26px; font-size: 1.05rem; cursor: pointer;
+      transition: background 0.2s;
+      border-radius: 0 60px 60px 0; flex-shrink: 0;
+    }
+    .search-btn:hover { background: var(--crimson-dark); }
+
+    /* ============================
+       SECTIONS & CARDS
+    ============================ */
+    .section-wrap { padding: 34px 0; }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem; font-weight: 700; color: var(--navy);
+    }
+
+    .section-link {
+      color: var(--crimson); font-size: 0.83rem; font-weight: 500;
+      text-decoration: none;
+      display: inline-flex; align-items: center; gap: 4px;
+      transition: gap 0.2s;
+    }
+    .section-link:hover { gap: 8px; color: var(--crimson-dark); text-decoration: none; }
+
+    .resort-card {
+      border: none; border-radius: 14px; overflow: hidden;
+      background: white;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+      transition: transform 0.25s, box-shadow 0.25s;
+      cursor: pointer; position: relative;
+    }
+    .resort-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,0,0,0.13); }
+
+    /* ===== CARD CAROUSEL ===== */
+    .card-carousel {
+      position: relative; width: 100%; height: 168px;
+      overflow: hidden; border-radius: 14px 14px 0 0;
+    }
+    .card-carousel-track {
+      display: flex; height: 100%;
+      transition: transform 0.38s cubic-bezier(0.4,0,0.2,1);
+      will-change: transform;
+    }
+    .card-carousel-track img {
+      min-width: 100%; width: 100%; height: 168px;
+      object-fit: cover; flex-shrink: 0; pointer-events: none;
+      display: block;
+    }
+    .carousel-arrow {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: white; border: none; border-radius: 50%;
+      width: 28px; height: 28px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.68rem; color: #222;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+      cursor: pointer; z-index: 10;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.2s, background 0.15s;
+    }
+    .carousel-arrow.prev { left: 8px; }
+    .carousel-arrow.next { right: 8px; }
+    .resort-card:hover .carousel-arrow { opacity: 1; pointer-events: all; }
+    .carousel-arrow:hover { background: #f0f0f0; }
+    .carousel-dots {
+      position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 4px; z-index: 10;
+      opacity: 0; transition: opacity 0.2s;
+    }
+    .resort-card:hover .carousel-dots { opacity: 1; }
+    .carousel-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: rgba(255,255,255,0.55);
+      border: none; padding: 0; cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .carousel-dot.active { background: white; transform: scale(1.35); }
+
+    .resort-card .card-body { padding: 11px 13px 13px; }
+    .resort-card .card-title {
+      font-weight: 600; font-size: 0.88rem; color: var(--navy);
+      margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .resort-card .card-text { font-size: 0.77rem; color: var(--muted); margin-bottom: 5px; }
+    .price-tag { font-size: 0.81rem; color: var(--crimson); font-weight: 600; }
+
+    .heart-btn {
+      position: absolute; top: 10px; right: 10px;
+      background: white; border: none; border-radius: 50%;
+      width: 30px; height: 30px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.78rem; color: #ccc;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.14);
+      cursor: pointer; transition: all 0.2s; z-index: 10;
+    }
+    .heart-btn:hover, .heart-btn.liked { color: var(--crimson); }
+
+    .badge-star {
+      position: absolute; top: 10px; left: 10px;
+      background: var(--gold); color: white;
+      font-size: 0.66rem; font-weight: 700;
+      padding: 3px 8px; border-radius: 4px;
+      display: flex; align-items: center; gap: 3px; z-index: 10;
+    }
+
+    .featured-card .card-carousel,
+    .featured-card .card-carousel-track img { height: 188px; }
+
+    /* ============================
+       DESTINATIONS + FOOTER
+    ============================ */
+    .destinations-footer { background: var(--crimson); padding: 26px 0; }
+
+    .dest-col .dest-title { font-weight: 700; font-size: 0.78rem; color: white; margin-bottom: 6px; }
+    .dest-col a {
+      display: block; font-size: 0.74rem; color: rgba(255,255,255,0.74);
+      text-decoration: none; line-height: 2.1;
+      transition: color 0.15s, padding-left 0.15s;
+    }
+    .dest-col a:hover { color: white; padding-left: 5px; }
+
+    .main-footer { background: var(--navy); color: rgba(255,255,255,0.6); padding: 38px 0 18px; }
+
+    .footer-brand { font-family: 'Playfair Display', serif; font-size: 1.25rem; color: white; margin-bottom: 10px; }
+    .footer-brand span { color: var(--crimson); }
+
+    .footer-link {
+      display: block; color: rgba(255,255,255,0.57); text-decoration: none;
+      font-size: 0.81rem; line-height: 2.2;
+      transition: color 0.15s, padding-left 0.15s;
+    }
+    .footer-link:hover { color: var(--crimson); padding-left: 4px; }
+
+    .footer-heading {
+      color: white; font-size: 0.83rem; font-weight: 600;
+      letter-spacing: 1px; text-transform: uppercase; margin-bottom: 11px;
+    }
+
+    .footer-divider { border-color: rgba(255,255,255,0.1); margin: 22px 0 15px; }
+
+    /* Fade in */
+    .fade-in { opacity: 0; transform: translateY(22px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* ============================
+       RESPONSIVE — TABLET (max 768px)
+    ============================ */
+    @media (max-width: 768px) {
+
+      /* Navbar */
+      .navbar-custom { padding: 0.6rem 1rem; }
+      .brand-name { font-size: 1.15rem; }
+      .brand-logo { width: 32px; height: 32px; font-size: 15px; }
+
+      /* Login/Signup buttons — smaller */
+      .btn-login, .btn-signup { font-size: 0.78rem; padding: 6px 12px; gap: 5px; }
+
+      /* Hero */
+      .hero { height: auto; padding: 60px 20px 50px; }
+      .hero h1 { font-size: 1.9rem; }
+      .hero p { font-size: 0.9rem; }
+
+      /* Search bar — stack vertically */
+      .search-bar {
+        flex-direction: column;
+        border-radius: 16px;
+        max-width: 100%;
+      }
+      .search-field {
+        border-right: none;
+        border-bottom: 1px solid #eee;
+        padding: 12px 16px;
+      }
+      .search-btn {
+        border-radius: 0 0 16px 16px;
+        padding: 13px;
+        width: 100%;
+        font-size: 1rem;
+      }
+
+      /* Section titles */
+      .section-title { font-size: 1.15rem; }
+      .section-wrap { padding: 26px 0; }
+
+      /* Cards — 2 columns */
+      .resort-card img { height: 148px; }
+      .featured-card img { height: 155px; }
+
+      /* Sidebar slightly narrower */
+      .sidebar { width: 250px; }
+
+      /* Footer */
+      .main-footer { padding: 28px 0 14px; }
+      .footer-brand { font-size: 1.1rem; }
+      .destinations-footer { padding: 20px 0; }
+    }
+
+    /* ============================
+       RESPONSIVE — MOBILE (max 576px)
+    ============================ */
+    @media (max-width: 576px) {
+
+      /* Navbar */
+      .navbar-custom { padding: 0.55rem 0.9rem; }
+      .brand-name { font-size: 1.05rem; }
+      .nav-globe { display: none; }           /* hide globe on small screens */
+      .nav-divider:first-of-type { display: none; }
+
+      /* Show only icon on login/signup — hide text */
+      .btn-login span, .btn-signup span { display: none; }
+      .btn-login, .btn-signup {
+        padding: 7px 10px;
+        border-radius: 8px;
+        font-size: 0.9rem;
+      }
+
+      /* Hero */
+      .hero { padding: 50px 14px 44px; }
+      .hero-tag { font-size: 0.65rem; padding: 4px 11px; }
+      .hero h1 { font-size: 1.65rem; }
+      .hero p { font-size: 0.83rem; margin-bottom: 22px; }
+
+      /* Search bar */
+      .search-bar { border-radius: 14px; }
+      .search-field { padding: 11px 14px; }
+      .search-field-inner label { font-size: 0.58rem; }
+      .search-field-inner input,
+      .search-field-inner span { font-size: 0.78rem; }
+      .search-btn { padding: 12px; border-radius: 0 0 14px 14px; }
+
+      /* Cards — 2 columns, smaller */
+      .resort-card img { height: 130px; }
+      .resort-card .card-body { padding: 9px 10px 11px; }
+      .resort-card .card-title { font-size: 0.8rem; }
+      .resort-card .card-text { font-size: 0.7rem; }
+      .price-tag { font-size: 0.74rem; }
+      .featured-card img { height: 138px; }
+
+      /* Section spacing */
+      .section-wrap { padding: 22px 0; }
+      .section-title { font-size: 1.05rem; }
+      .section-link { font-size: 0.76rem; }
+
+      /* Sidebar full-width on very small screens */
+      .sidebar { width: 100%; border-radius: 0; }
+
+      /* Destinations */
+      .destinations-footer { padding: 18px 0; }
+      .dest-col .dest-title { font-size: 0.75rem; }
+      .dest-col a { font-size: 0.7rem; line-height: 1.9; }
+
+      /* Footer */
+      .main-footer { padding: 24px 0 12px; }
+      .footer-brand { font-size: 1rem; }
+      .footer-heading { font-size: 0.78rem; }
+      .footer-link { font-size: 0.76rem; line-height: 2; }
+      .footer-divider { margin: 16px 0 12px; }
+    }
+
+    /* ============================
+       RESPONSIVE — SMALL MOBILE (max 400px)
+    ============================ */
+    @media (max-width: 400px) {
+      .brand-name { font-size: 0.95rem; }
+      .brand-logo { width: 28px; height: 28px; font-size: 13px; }
+      .hero h1 { font-size: 1.45rem; }
+      .resort-card img { height: 115px; }
+      .sidebar { width: 100%; }
+      .nav-right { gap: 7px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Sidebar Overlay -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+<!-- Sidebar -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-brand">Resort<span>Sphere</span></div>
+    <button class="sidebar-close" onclick="closeSidebar()">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+
+  <div class="sidebar-nav">
+    <div class="sidebar-label">Quick Links</div>
+
+    <a href="#" class="sidebar-link">
+      <div class="sidebar-icon"><i class="fas fa-calendar-check"></i></div>
+      Booking Resort
+    </a>
+
+    <a href="#" class="sidebar-link">
+      <div class="sidebar-icon"><i class="fas fa-headset"></i></div>
+      Contact Admin
+    </a>
+
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-label">Session</div>
+
+    <a href="#" class="sidebar-logout">
+      <div class="sidebar-icon"><i class="fas fa-sign-out-alt"></i></div>
+      Log Out
+    </a>
+  </div>
+
+  <div class="sidebar-footer">© 2025 ResortSphere · All rights reserved</div>
+</aside>
+
+<!-- Navbar -->
+<nav class="navbar-custom">
+  <div class="container-fluid d-flex align-items-center justify-content-between">
+
+    <a href="#" class="navbar-brand-custom">
+      <div class="brand-logo"><i class="fas fa-hotel"></i></div>
+      <span class="brand-name">Resort<span>Sphere</span></span>
+    </a>
+
+    <div class="nav-right">
+      <button class="nav-globe" title="Language"><i class="fas fa-globe"></i></button>
+
+      <div class="nav-divider"></div>
+
+      <a href="client A.html" class="btn-login">
+        <i class="fas fa-sign-in-alt"></i>
+        <span>Login</span>
+      </a>
+
+      <a href="client A.html" class="btn-signup">
+        <i class="fas fa-user-plus"></i>
+        <span>Sign Up</span>
+      </a>
+
+      <div class="nav-divider"></div>
+
+      <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleSidebar()" title="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-tag">✦ Discover &amp; Book</div>
+    <h1>Entire place,<br/>just for you</h1>
+    <p>Explore the world's finest resorts — curated for every traveler</p>
+
+    <div class="search-bar">
+      <div class="search-field">
+        <i class="fas fa-map-marker-alt"></i>
+        <div class="search-field-inner">
+          <label>Where To?</label>
+          <input type="text" placeholder="Search destination"/>
+        </div>
+      </div>
+      <div class="search-field">
+        <i class="fas fa-calendar-alt"></i>
+        <div class="search-field-inner">
+          <label>When</label>
+          <span>Add dates</span>
+        </div>
+      </div>
+      <div class="search-field">
+        <i class="fas fa-users"></i>
+        <div class="search-field-inner">
+          <label>Who</label>
+          <span>Add guests</span>
+        </div>
+      </div>
+      <button class="search-btn"><i class="fas fa-search"></i></button>
+    </div>
+  </div>
+</section>
+
+<!-- Popular Homes -->
+<section class="section-wrap fade-in">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <div class="section-title">Popular resorts in Malaysia </div>
+      <a href="#" class="section-link">See all <i class="fas fa-arrow-right fa-xs"></i></a>
+    </div>
+    <div class="row g-3">
+
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="resort-card card" onclick="window.location.href='resort-detail.html'">
+          <div class="card-carousel" onclick="event.stopPropagation()">
+            <div class="card-carousel-track">
+              <img src="unnamed (7).jpg" alt="img1"/>
+              <img src="unnamed (4).jpg" alt="img2"/>
+              <img src="bath 2.jpg" alt="img4"/>
+              <img src="IMG_5778.JPG" alt="">
+              <img src="unnamed.jpg" alt="">
+              <img src="unnamed (2).jpg" alt="">
+              
+            </div>
+            <button class="carousel-arrow prev" onclick="slideCard(this,-1)"><i class="fas fa-chevron-left"></i></button>
+            <button class="carousel-arrow next" onclick="slideCard(this,1)"><i class="fas fa-chevron-right"></i></button>
+            <div class="carousel-dots"></div>
+          </div>
+          <button class="heart-btn" onclick="event.stopPropagation();toggleHeart(this)"><i class="fas fa-heart"></i></button>
+          <div class="card-body">
+            <div class="card-title"><a href="page2.html"> SANTIKA Hulu Langat</a></div>
+            <div class="card-text">2 nights · Private room</div>
+            <div class="price-tag">$37 for 2 nights</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="resort-card card" onclick="window.location.href='resort-detail.html'">
+          <div class="card-carousel" onclick="event.stopPropagation()">
+            <div class="card-carousel-track">
+              <img src="hotel.jpg" alt="img1"/>
+              <img src="hall.jpg" alt="img2"/>
+              <img src="bedroom.jpg" alt="img3"/>
+              <img src="room 2.jpg" alt="img4"/>
+              <img src="night view.jpg" alt="">
+            </div>
+            <button class="carousel-arrow prev" onclick="slideCard(this,-1)"><i class="fas fa-chevron-left"></i></button>
+            <button class="carousel-arrow next" onclick="slideCard(this,1)"><i class="fas fa-chevron-right"></i></button>
+            <div class="carousel-dots"></div>
+          </div>
+          <button class="heart-btn" onclick="event.stopPropagation();toggleHeart(this)"><i class="fas fa-heart"></i></button>
+          <div class="card-body">
+            <div class="card-title">Condo in Malaysia</div>
+            <div class="card-text">2 nights · Entire unit</div>
+            <div class="price-tag">$50 for 2 nights</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="resort-card card" onclick="window.location.href='resort-detail.html'">
+          <div class="card-carousel" onclick="event.stopPropagation()">
+            <div class="card-carousel-track">
+              <img src="exterior.jpg" alt="img1"/>
+              <img src="room 1_New1.jpg" alt="img2"/>
+              <img src="room 3.jpg" alt="img3"/>
+              <img src="breakfast.jpg" alt="img4"/>
+              <img src="pool side.jpg" alt="img4"/>
+              <img src="exterior 2.jpg" alt="img4"/>
+              <img src="gim.jpg" alt="img4"/>
+            </div>
+            <button class="carousel-arrow prev" onclick="slideCard(this,-1)"><i class="fas fa-chevron-left"></i></button>
+            <button class="carousel-arrow next" onclick="slideCard(this,1)"><i class="fas fa-chevron-right"></i></button>
+            <div class="carousel-dots"></div>
+          </div>
+          <button class="heart-btn" onclick="event.stopPropagation();toggleHeart(this)"><i class="fas fa-heart"></i></button>
+          <div class="card-body">
+            <div class="card-title">The Retreat Palin Malaysia</div>
+            <div class="card-text">3 nights · Private room</div>
+            <div class="price-tag">$48 for 3 nights</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="resort-card card" onclick="window.location.href='resort-detail.html'">
+          <div class="card-carousel" onclick="event.stopPropagation()">
+            <div class="card-carousel-track">
+              <img src="Malaysia resort.jpg" alt="img1"/>
+              <img src="personal room.jpg" alt="img2"/>
+              <img src="lobby.jpg" alt="img2"/>
+              <img src="bath 3.jpg" alt="img3"/>
+              <img src="room.jpg" alt="img4"/>
+            </div>
+            <button class="carousel-arrow prev" onclick="slideCard(this,-1)"><i class="fas fa-chevron-left"></i></button>
+            <button class="carousel-arrow next" onclick="slideCard(this,1)"><i class="fas fa-chevron-right"></i></button>
+            <div class="carousel-dots"></div>
+          </div>
+          <button class="heart-btn liked" onclick="event.stopPropagation();toggleHeart(this)"><i class="fas fa-heart"></i></button>
+          <!-- <div class="badge-star"><i class="fas fa-star"></i> 1 STAR</div> -->
+          <div class="card-body">
+            <div class="card-title">The Westin Kuala Lumpur</div>
+            <div class="card-text">2 nights · Hotel room</div>
+            <div class="price-tag">$86 for 2 nights</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Featured Hotels -->
+<section class="section-wrap fade-in" style="background:#f0ede8;">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <div>
+        <div class="section-title">Featured hotels in London</div>
+        <div style="font-size:0.78rem;color:var(--muted);">A collection of independent and hand picked hotels</div>
+      </div>
+      <a href="#" class="section-link">See all <i class="fas fa-arrow-right fa-xs"></i></a>
+    </div>
+    <div class="row g-3">
+
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="resort-card featured-card card" onclick="window.location.href='resort-detail.html'">
+          <div class="card-carousel" onclick="event.stopPropagation()">
+            <div class="card-carousel-track">
+              <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=500&q=80" alt="img1"/>
+              <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=500&q=80" alt="img2"/>
+              <img src="https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=500&q=80" alt="img3"/>
+            </div>
+            <button class="carousel-arrow prev" onclick="slideCard(this,-1)"><i class="fas fa-chevron-left"></i></button>
+            <button class="carousel-arrow next" onclick="slideCard(this,1)"><i class="fas fa-chevron-right"></i></button>
+            <div class="carousel-dots"></div>
+          </div>
+          <button class="heart-btn" onclick="event.stopPropagation();toggleHeart(this)"><i class="fas fa-heart"></i></button>
+          <div class="card-body">
+            <div class="card-title">Rockwell East</div>
+            <div class="card-text">London · Boutique</div>
+            <div class="price-tag">From $411 for 2 nights</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="resort-card featured-card card" onclick="window.location.href='resort-detail.html'">
+          <div class="card-carousel" onclick="event.stopPropagation()">
+            <div class="card-carousel-track">
+              <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=500&q=80" alt="img1"/>
+              <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=500&q=80" alt="img2"/>
+              <img src="https://images.unsplash.com/photo-1445019980597-93fa8acb246c?w=500&q=80" alt="img3"/>
+            </div>
+            <button class="carousel-arrow prev" onclick="slideCard(this,-1)"><i class="fas fa-chevron-left"></i></button>
+            <button class="carousel-arrow next" onclick="slideCard(this,1)"><i class="fas fa-chevron-right"></i></button>
+            <div class="carousel-dots"></div>
+          </div>
+          <button class="heart-btn liked" onclick="event.stopPropagation();toggleHeart(this)"><i class="fas fa-heart"></i></button>
+          <div class="card-body">
+            <div class="card-title">Hotel Saint</div>
+            <div class="card-text">London · Luxury</div>
+            <div class="price-tag">From $434 for 2 nights</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="resort-card featured-card card" onclick="window.location.href='resort-detail.html'">
+          <div class="card-carousel" onclick="event.stopPropagation()">
+            <div class="card-carousel-track">
+              <img src="https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=500&q=80" alt="img1"/>
+              <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=500&q=80" alt="img2"/>
+              <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=500&q=80" alt="img3"/>
+            </div>
+            <button class="carousel-arrow prev" onclick="slideCard(this,-1)"><i class="fas fa-chevron-left"></i></button>
+            <button class="carousel-arrow next" onclick="slideCard(this,1)"><i class="fas fa-chevron-right"></i></button>
+            <div class="carousel-dots"></div>
+          </div>
+          <button class="heart-btn" onclick="event.stopPropagation();toggleHeart(this)"><i class="fas fa-heart"></i></button>
+          <div class="card-body">
+            <div class="card-title">Orange Buckingham</div>
+            <div class="card-text">London · Heritage</div>
+            <div class="price-tag">From $454 for 2 nights</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="resort-card featured-card card" onclick="window.location.href='resort-detail.html'">
+          <div class="card-carousel" onclick="event.stopPropagation()">
+            <div class="card-carousel-track">
+              <img src="https://images.unsplash.com/photo-1445019980597-93fa8acb246c?w=500&q=80" alt="img1"/>
+              <img src="https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=500&q=80" alt="img2"/>
+              <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=500&q=80" alt="img3"/>
+            </div>
+            <button class="carousel-arrow prev" onclick="slideCard(this,-1)"><i class="fas fa-chevron-left"></i></button>
+            <button class="carousel-arrow next" onclick="slideCard(this,1)"><i class="fas fa-chevron-right"></i></button>
+            <div class="carousel-dots"></div>
+          </div>
+          <button class="heart-btn" onclick="event.stopPropagation();toggleHeart(this)"><i class="fas fa-heart"></i></button>
+          <div class="card-body">
+            <div class="card-title">Rockwell East</div>
+            <div class="card-text">London · Boutique</div>
+            <div class="price-tag">From $411 for 1 night</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Available Next Month -->
+<section class="section-wrap fade-in">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <div class="section-title">Available next month in Dubai</div>
+      <a href="#" class="section-link">See all <i class="fas fa-arrow-right fa-xs"></i></a>
+    </div>
+    <div class="row g-3">
+
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="resort-card card" onclick="window.location.href='resort-detail.html'">
+          <div class="card-carousel" onclick="event.stopPropagation()">
+            <div class="card-carousel-track">
+              <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=500&q=80" alt="img1"/>
+              <img src="https://images.unsplash.com/photo-1559599076-9a6b6a96e38e?w=500&q=80" alt="img2"/>
+              <img src="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=500&q=80" alt="img3"/>
+            </div>
+            <button class="carousel-arrow prev" onclick="slideCard(this,-1)"><i class="fas fa-chevron-left"></i></button>
+            <button class="carousel-arrow next" onclick="slideCard(this,1)"><i class="fas fa-chevron-right"></i></button>
+            <div class="carousel-dots"></div>
+          </div>
+          <button class="heart-btn liked" onclick="event.stopPropagation();toggleHeart(this)"><i class="fas fa-heart"></i></button>
+          <div class="card-body">
+            <div class="card-title">San Antonio</div>
+            <div class="card-text">Condo rentals</div>
+            <div class="price-tag">Available Apr 12–18</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="resort-card card" onclick="window.location.href='resort-detail.html'">
+          <div class="card-carousel" onclick="event.stopPropagation()">
+            <div class="card-carousel-track">
+              <img src="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=500&q=80" alt="img1"/>
+              <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=500&q=80" alt="img2"/>
+              <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=500&q=80" alt="img3"/>
+            </div>
+            <button class="carousel-arrow prev" onclick="slideCard(this,-1)"><i class="fas fa-chevron-left"></i></button>
+            <button class="carousel-arrow next" onclick="slideCard(this,1)"><i class="fas fa-chevron-right"></i></button>
+            <div class="carousel-dots"></div>
+          </div>
+          <button class="heart-btn" onclick="event.stopPropagation();toggleHeart(this)"><i class="fas fa-heart"></i></button>
+          <div class="card-body">
+            <div class="card-title">Brooklyn</div>
+            <div class="card-text">House rentals</div>
+            <div class="price-tag">Available Apr 5–10</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="resort-card card" onclick="window.location.href='resort-detail.html'">
+          <div class="card-carousel" onclick="event.stopPropagation()">
+            <div class="card-carousel-track">
+              <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=500&q=80" alt="img1"/>
+              <img src="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=500&q=80" alt="img2"/>
+              <img src="https://images.unsplash.com/photo-1559599076-9a6b6a96e38e?w=500&q=80" alt="img3"/>
+            </div>
+            <button class="carousel-arrow prev" onclick="slideCard(this,-1)"><i class="fas fa-chevron-left"></i></button>
+            <button class="carousel-arrow next" onclick="slideCard(this,1)"><i class="fas fa-chevron-right"></i></button>
+            <div class="carousel-dots"></div>
+          </div>
+          <button class="heart-btn" onclick="event.stopPropagation();toggleHeart(this)"><i class="fas fa-heart"></i></button>
+          <div class="card-body">
+            <div class="card-title">San Antonio</div>
+            <div class="card-text">Condo rentals</div>
+            <div class="price-tag">Available Apr 20–25</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="resort-card card" onclick="window.location.href='resort-detail.html'">
+          <div class="card-carousel" onclick="event.stopPropagation()">
+            <div class="card-carousel-track">
+              <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=500&q=80" alt="img2"/>
+              <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=500&q=80" alt="img3"/>
+              <img src="ajs1-bed-5170531_1920.jpg" alt="">
+            </div>
+            <button class="carousel-arrow prev" onclick="slideCard(this,-1)"><i class="fas fa-chevron-left"></i></button>
+            <button class="carousel-arrow next" onclick="slideCard(this,1)"><i class="fas fa-chevron-right"></i></button>
+            <div class="carousel-dots"></div>
+          </div>
+          <button class="heart-btn" onclick="event.stopPropagation();toggleHeart(this)"><i class="fas fa-heart"></i></button>
+          <div class="card-body">
+            <div class="card-title">San Antonio</div>
+            <div class="card-text">Condo rentals</div>
+            <div class="price-tag">Available Apr 8–14</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Destinations -->
+<section class="destinations-footer fade-in">
+  <div class="container">
+    <div class="row g-3">
+      <div class="col-6 col-md-3 dest-col">
+        <div class="dest-title">San Antonio</div>
+        <a href="#">Condo rentals</a>
+        <a href="#">House rentals</a>
+        <a href="#">Apartment rentals</a>
+      </div>
+      <div class="col-6 col-md-3 dest-col">
+        <div class="dest-title">Brooklyn</div>
+        <a href="#">House rentals</a>
+        <a href="#">Condo rentals</a>
+        <a href="#">Studio rentals</a>
+      </div>
+      <div class="col-6 col-md-3 dest-col">
+        <div class="dest-title">San Antonio</div>
+        <a href="#">Condo rentals</a>
+        <a href="#">House rentals</a>
+        <a href="#">Luxury stays</a>
+      </div>
+      <div class="col-6 col-md-3 dest-col">
+        <div class="dest-title">San Antonio</div>
+        <a href="#">Condo rentals</a>
+        <a href="#">Apartment rentals</a>
+        <a href="#">Beach stays</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="main-footer">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="footer-brand">Resort<span>Sphere</span></div>
+        <p style="font-size:0.81rem;line-height:1.75;">Your trusted platform for discovering and booking the finest resorts worldwide. Manage stays. Elevate experiences.</p>
+        <div class="d-flex gap-3 mt-3">
+          <a href="#" class="footer-link"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="footer-link"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="footer-link"><i class="fab fa-twitter"></i></a>
+        </div>
+      </div>
+      <div class="col-6 col-md-2">
+        <div class="footer-heading">Support</div>
+        <a href="#" class="footer-link">Help Center</a>
+        <a href="#" class="footer-link">Safety Info</a>
+        <a href="#" class="footer-link">Cancellation</a>
+        <a href="#" class="footer-link">Contact Us</a>
+      </div>
+      <div class="col-6 col-md-2">
+        <div class="footer-heading">Company</div>
+        <a href="#" class="footer-link">About Us</a>
+        <a href="#" class="footer-link">Careers</a>
+        <a href="#" class="footer-link">Press</a>
+        <a href="#" class="footer-link">Blog</a>
+      </div>
+      <div class="col-6 col-md-2">
+        <div class="footer-heading">Hosting</div>
+        <a href="#" class="footer-link">List your Resort</a>
+        <a href="#" class="footer-link">Resort Manager</a>
+        <a href="#" class="footer-link">Resources</a>
+        <a href="#" class="footer-link">Community</a>
+      </div>
+      <div class="col-6 col-md-2">
+        <div class="footer-heading">Legal</div>
+        <a href="#" class="footer-link">Privacy Policy</a>
+        <a href="#" class="footer-link">Terms of Service</a>
+        <a href="#" class="footer-link">Cookie Policy</a>
+      </div>
+    </div>
+    <hr class="footer-divider"/>
+    <div class="d-flex flex-wrap justify-content-between align-items-center" style="font-size:0.77rem;">
+      <span>© 2025 ResortSphere · Government Graduate College for Women, Sheikhupura</span>
+      <span>Made with ❤️ by Insha, Ayesha, Saira &amp; Shabana</span>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // Sidebar
+  function toggleSidebar() {
+    const isOpen = document.getElementById('sidebar').classList.contains('open');
+    isOpen ? closeSidebar() : openSidebar();
+  }
+
+  function openSidebar() {
+    document.getElementById('sidebar').classList.add('open');
+    document.getElementById('sidebarOverlay').classList.add('open');
+    document.getElementById('hamburgerBtn').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeSidebar() {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebarOverlay').classList.remove('open');
+    document.getElementById('hamburgerBtn').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSidebar(); });
+
+  // Heart toggle
+  function toggleHeart(btn) {
+    btn.classList.toggle('liked');
+    const icon = btn.querySelector('i');
+    icon.style.transform = 'scale(1.4)';
+    setTimeout(() => icon.style.transform = 'scale(1)', 200);
+  }
+
+  // Scroll fade in
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(en => { if (en.isIntersecting) en.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-in').forEach(el => io.observe(el));
+
+  // Date picker
+  document.querySelectorAll('.search-field').forEach(f => {
+    f.addEventListener('click', function() {
+      const sp = this.querySelector('span');
+      if (sp && sp.textContent.trim() === 'Add dates') {
+        const inp = document.createElement('input');
+        inp.type = 'date';
+        inp.style.cssText = 'border:none;outline:none;background:none;font-size:0.83rem;font-weight:500;color:#333;width:100%;';
+        sp.replaceWith(inp);
+        inp.focus();
+      }
+    });
+  });
+
+  /* ============================
+     CARD CAROUSEL LOGIC
+  ============================ */
+
+  // Init all carousels on page load
+  document.querySelectorAll('.card-carousel').forEach(carousel => initCarousel(carousel));
+
+  function initCarousel(carousel) {
+    const track = carousel.querySelector('.card-carousel-track');
+    const imgs = track.querySelectorAll('img');
+    const dotsContainer = carousel.querySelector('.carousel-dots');
+    const total = imgs.length;
+    carousel._index = 0;
+
+    // Build dots
+    dotsContainer.innerHTML = '';
+    imgs.forEach((_, i) => {
+      const dot = document.createElement('button');
+      dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+      dot.onclick = (e) => { e.stopPropagation(); goTo(carousel, i); };
+      dotsContainer.appendChild(dot);
+    });
+
+    updateCarousel(carousel);
+  }
+
+  function slideCard(arrowBtn, dir) {
+    const carousel = arrowBtn.closest('.card-carousel');
+    const track = carousel.querySelector('.card-carousel-track');
+    const total = track.querySelectorAll('img').length;
+    carousel._index = (carousel._index + dir + total) % total;
+    updateCarousel(carousel);
+  }
+
+  function goTo(carousel, index) {
+    carousel._index = index;
+    updateCarousel(carousel);
+  }
+
+  function updateCarousel(carousel) {
+    const track = carousel.querySelector('.card-carousel-track');
+    const dots = carousel.querySelectorAll('.carousel-dot');
+    const idx = carousel._index;
+    track.style.transform = `translateX(-${idx * 100}%)`;
+    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+  }
+
+  // Touch/swipe support for mobile
+  document.querySelectorAll('.card-carousel').forEach(carousel => {
+    let startX = 0;
+    carousel.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+    carousel.addEventListener('touchend', e => {
+      const diff = startX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 40) {
+        const track = carousel.querySelector('.card-carousel-track');
+        const total = track.querySelectorAll('img').length;
+        carousel._index = (carousel._index + (diff > 0 ? 1 : -1) + total) % total;
+        updateCarousel(carousel);
+      }
+    }, { passive: true });
+  });
+</script>
+</body>
+</html>
