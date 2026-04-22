@@ -1,0 +1,142 @@
+/* ══════ LOGOUT PAGE CSS — ResortSphere Admin ══════ */
+
+* { font-family: 'Plus Jakarta Sans', sans-serif; box-sizing: border-box; }
+
+body {
+    margin: 0;
+    background: linear-gradient(160deg, #111827 0%, #1a2640 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logout-wrapper {
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logout-card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 40px 36px;
+    width: 100%;
+    max-width: 420px;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,.3);
+}
+
+.logout-brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 28px;
+}
+
+.brand-icon {
+    width: 44px;
+    height: 44px;
+    background: linear-gradient(135deg, #3b6ef5, #7c3aed);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+}
+
+.brand-name {
+    font-weight: 800;
+    font-size: 17px;
+    color: #111827;
+    line-height: 1.2;
+}
+
+.brand-sub {
+    font-size: 10.5px;
+    color: #9ca3af;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.logout-icon-wrap {
+    width: 80px;
+    height: 80px;
+    background: #fef2f2;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+}
+
+.logout-icon {
+    font-size: 36px;
+    color: #ef4444;
+}
+
+.logout-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: #111827;
+    margin-bottom: 8px;
+}
+
+.logout-msg {
+    font-size: 14px;
+    color: #6b7280;
+    margin-bottom: 28px;
+    line-height: 1.6;
+}
+
+.logout-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-cancel {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 22px;
+    border-radius: 10px;
+    border: 1.5px solid #e5e7eb;
+    background: #f9fafb;
+    color: #374151;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background .2s, border-color .2s;
+}
+.btn-cancel:hover {
+    background: #f3f4f6;
+    border-color: #d1d5db;
+    color: #111827;
+}
+
+.btn-logout {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 22px;
+    border-radius: 10px;
+    border: none;
+    background: #ef4444;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background .2s;
+}
+.btn-logout:hover { background: #dc2626; }
+
+@media(max-width: 480px) {
+    .logout-card { padding: 30px 20px; }
+    .logout-actions { flex-direction: column; }
+    .btn-cancel, .btn-logout { width: 100%; justify-content: center; }
+}
